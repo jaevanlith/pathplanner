@@ -38,12 +38,41 @@ public class Main {
         }
     }
     
-    public static void main(String[] args) throws IOException {
-        // Set vars
+    public static void main(String[] args) throws Exception {
+        // Default vars
         int N = 5;
         String levelType = "generated";     // generated or provided
         String plannerType = "greedy";     // greedy
         boolean printGrid = false;
+
+        // Parse cmd arguments
+        try {
+            if (args.length > 0) {
+                try {
+                    N = Integer.parseInt(args[0]);
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid grid size (N): " + args[0]);
+                    return;
+                }
+            }
+            if (args.length > 1) {
+                levelType = args[1];
+                if (!levelType.equals("generated") && !levelType.equals("provided")) {
+                    throw new IllegalArgumentException("Invalid levelType. Options: generated, provided");
+                }
+            }
+            if (args.length > 2) {
+                plannerType = args[2];
+                if (!plannerType.equals("greedy")) {
+                    throw new IllegalArgumentException("Invalid plannerType. Options: greedy");
+                }
+            }
+            if (args.length > 3) {
+                printGrid = Boolean.parseBoolean(args[3]);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
         
         try {
             // Init
