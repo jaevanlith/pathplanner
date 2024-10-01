@@ -1,6 +1,5 @@
+avalor\Main.class
 avalor\GreedyPlanner.class
 avalor\LevelGenerator.class
 avalor\Planner.class
 avalor\Result.class
-avalor\GreedyPlanner$PathTuple.class
-avalor\Main.class

@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: avalor.TreeNodeTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! - in avalor.TreeNodeTest
+testGetBestPath(avalor.TreeNodeTest)  Time elapsed: 0.01 s  <<< FAILURE!
+java.lang.AssertionError
+	at avalor.TreeNodeTest.testGetBestPath(TreeNodeTest.java:97)
+
+testComputeTotalScore(avalor.TreeNodeTest)  Time elapsed: 0 s  <<< FAILURE!
+java.lang.AssertionError: expected:<3.5> but was:<3.0>
+	at avalor.TreeNodeTest.testComputeTotalScore(TreeNodeTest.java:110)
+
