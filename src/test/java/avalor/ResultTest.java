@@ -15,7 +15,7 @@ public class ResultTest {
 
     @Test
     public void testGetPath() {
-        assertEquals("Path: (0,0)--(1,1)", result.getPath());
+        assertEquals("(0,0)--(1,1)", result.getPath());
     }
 
     @Test

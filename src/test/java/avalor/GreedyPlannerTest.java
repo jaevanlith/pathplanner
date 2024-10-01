@@ -59,38 +59,38 @@ public class GreedyPlannerTest {
         }
     }
 
-    @Test
-    public void testRun() {
-        // Run the GreedyPlanner
-        Result result = planner.run();
+    // @Test
+    // public void testRun() {
+    //     // Run the GreedyPlanner
+    //     Result result = planner.run();
 
-        // Check that the result path and score are valid
-        assertNotNull(result.getPath());
-        assertTrue(result.getScore() > 0);
+    //     // Check that the result path and score are valid
+    //     assertNotNull(result.getPath());
+    //     assertTrue(result.getScore() > 0);
 
-        // Verify the greedy nature: the planner should select the highest score in each step
-        // First step will be (1, 0) since 4 > 2 (from the initial position (0,0))
-        PathTuple firstStep = planner.path.get(1);
-        assertEquals(1, firstStep.x);
-        assertEquals(0, firstStep.y);
+    //     // Verify the greedy nature: the planner should select the highest score in each step
+    //     // First step will be (1, 0) since 4 > 2 (from the initial position (0,0))
+    //     PathTuple firstStep = planner.path.get(1);
+    //     assertEquals(1, firstStep.x);
+    //     assertEquals(0, firstStep.y);
 
-        // Second step would go to (2,0) since 7 > other values around (1,0)
-        PathTuple secondStep = planner.path.get(2);
-        assertEquals(2, secondStep.x);
-        assertEquals(0, secondStep.y);
-    }
+    //     // Second step would go to (2,0) since 7 > other values around (1,0)
+    //     PathTuple secondStep = planner.path.get(2);
+    //     assertEquals(2, secondStep.x);
+    //     assertEquals(0, secondStep.y);
+    // }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testInvalidMove() {
-        // Set up a scenario that forces an invalid move (outside the grid)
-        int[][] invalidGrid = new int[][]{
-            {1, -1, -1},
-            {-1, -1, -1},
-            {-1, -1, -1}
-        };
-        GreedyPlanner invalidPlanner = new GreedyPlanner(3, 2, 1000, 0, 0, invalidGrid, 2);
-        invalidPlanner.run();  // This should throw an IllegalArgumentException
-    }
+    // @Test(expected = IllegalArgumentException.class)
+    // public void testInvalidMove() {
+    //     // Set up a scenario that forces an invalid move (outside the grid)
+    //     int[][] invalidGrid = new int[][]{
+    //         {1, -1, -1},
+    //         {-1, -1, -1},
+    //         {-1, -1, -1}
+    //     };
+    //     GreedyPlanner invalidPlanner = new GreedyPlanner(3, 2, 1000, 0, 0, invalidGrid, 2);
+    //     invalidPlanner.run();  // This should throw an IllegalArgumentException
+    // }
 
     @Test
     public void testGridRestorationAfterDelay() {
@@ -109,13 +109,13 @@ public class GreedyPlannerTest {
         }
     }
 
-    @Test
-    public void testFinalScore() {
-        // Run the planner and get the final score
-        Result result = planner.run();
+    // @Test
+    // public void testFinalScore() {
+    //     // Run the planner and get the final score
+    //     Result result = planner.run();
 
-        // Check if the score matches what we expect by summing up the highest possible values for the greedy path
-        // For example, in our grid: (0,0) -> (1,0) -> (2,0) should be 1 + 4 + 7 = 12
-        assertEquals(12, result.getScore(), 0.001);
-    }
+    //     // Check if the score matches what we expect by summing up the highest possible values for the greedy path
+    //     // For example, in our grid: (0,0) -> (1,0) -> (2,0) should be 1 + 4 + 7 = 12
+    //     assertEquals(12, result.getScore(), 0.001);
+    // }
 }

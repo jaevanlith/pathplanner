@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: avalor.ResultTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.005 s <<< FAILURE! - in avalor.ResultTest
-testGetPath(avalor.ResultTest)  Time elapsed: 0.002 s  <<< FAILURE!
-org.junit.ComparisonFailure: expected:<[Path: ](0,0)--(1,1)> but was:<[](0,0)--(1,1)>
-	at avalor.ResultTest.testGetPath(ResultTest.java:18)
-
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s - in avalor.ResultTest

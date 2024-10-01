@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="NL"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11.0.14\bin"/>
-    <property name="sun.java.command" value="C:\Users\boeki\AppData\Local\Temp\surefire5220693325723066723\surefirebooter12316048339012548867.jar C:\Users\boeki\AppData\Local\Temp\surefire5220693325723066723 2024-10-01T18-48-36_884-jvmRun1 surefire14973249958303524706tmp surefire_03954309797893096638tmp"/>
+    <property name="sun.java.command" value="C:\Users\boeki\AppData\Local\Temp\surefire2839057680224091562\surefirebooter16706512230778378840.jar C:\Users\boeki\AppData\Local\Temp\surefire2839057680224091562 2024-10-01T18-58-51_382-jvmRun1 surefire17846538148934165613tmp surefire_06793567990200870855tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\boeki\OneDrive\Bureaublad\avalor\pathplanner\target\test-classes;C:\Users\boeki\OneDrive\Bureaublad\avalor\pathplanner\target\classes;C:\Users\boeki\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\boeki\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -33,7 +33,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\boeki\AppData\Local\Temp\surefire5220693325723066723\surefirebooter12316048339012548867.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\boeki\AppData\Local\Temp\surefire2839057680224091562\surefirebooter16706512230778378840.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.14+8-LTS-263"/>
