@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Run levels with MCTS algorithm
@@ -48,8 +51,8 @@ jobs:
 
     - name: Commit and push all results
       env:
-        PAT: ${{ secrets.PAT }} # Access from secrets
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git add ./results/*
         git commit -m "Add results from MCTS algorithm run"
-        git push https://${{ secrets.PAT }}@github.com/jaevanlith/pathplanner.git HEAD:${{ github.ref }}
+        git push "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_REF}
