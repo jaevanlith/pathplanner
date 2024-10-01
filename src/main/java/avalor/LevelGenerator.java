@@ -13,16 +13,20 @@ public class LevelGenerator {
     private int startX;
     private int startY;
     private int[][] grid;
+    private int lowerBound;
+    private int upperBound;
     private Random random;
 
     // Retrieve values and call generate
-    public LevelGenerator(int N, int t, long T, int startX, int startY) {
+    public LevelGenerator(int N, int t, long T, int startX, int startY, int lowerBound, int upperBound) {
         this.N = N;
         this.t = t;
         this.T = T;
         this.startX = startX;
         this.startY = startY;
         this.grid = new int[N][N];
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
         this.random = new Random();
         generateGrid();
     }
@@ -31,7 +35,7 @@ public class LevelGenerator {
     private void generateGrid() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                grid[i][j] = random.nextInt(100) + 1;
+                grid[i][j] = random.nextInt(this.upperBound) + this.lowerBound;
             }
         }
     }
@@ -55,7 +59,7 @@ public class LevelGenerator {
                 writer.write(N + "\n");
                 writer.write(t + "\n");
                 writer.write(T + "\n");
-                writer.write("(" + startX + ", " + startY + ")\n");
+                writer.write("(" + startX + "," + startY + ")\n");
 
                 for (int i = 0; i < N; i++) {
                     for (int j = 0; j < N; j++) {
@@ -75,14 +79,16 @@ public class LevelGenerator {
 
     public static void main(String[] args) {
         // Set vars
-        int N = 5;
-        int t = 10;
+        int N = 3;
+        int t = 2;
         int T = 1000;
         int startX = 0;
         int startY = 0;
+        int lowerBound = 1;
+        int upperBound = 10;
 
         // Generate level
-        LevelGenerator level = new LevelGenerator(N, t, T, startX, startY);
+        LevelGenerator level = new LevelGenerator(N, t, T, startX, startY, lowerBound, upperBound);
 
         // Save
         String fileName =  "./levels/generated/" + String.valueOf(N) + ".txt";
