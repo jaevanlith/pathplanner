@@ -52,4 +52,4 @@ jobs:
       run: |
         git add ./results/*
         git commit -m "Add results from MCTS algorithm run"
-        git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+        git push https://${{ secrets.PAT }}@github.com/jaevanlith/pathplanner.git HEAD:${{ github.ref }}
