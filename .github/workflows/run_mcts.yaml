@@ -1,4 +1,4 @@
-name: Run levels
+name: Run levels MCTS
 
 on:
   push:
