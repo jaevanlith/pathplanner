@@ -2,11 +2,19 @@ package avalor;
 
 public class Result {
     public String path;
-    public int score;
+    public double score;
 
-    Result(String path, int score) {
+    Result(String path, double score) {
         this.path = path;
         this.score = score;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     @Override

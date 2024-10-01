@@ -6,13 +6,13 @@ import java.io.IOException;
 
 public class Main {
 
-    private static Planner initPlanner(String fileName, String plannerType) throws IOException {
+    private static Planner initPlanner(String fileName, String plannerType, int delay) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             int N = Integer.parseInt(reader.readLine().trim());
             int t = Integer.parseInt(reader.readLine().trim());
             long T = Long.parseLong(reader.readLine().trim());
 
-            // Parse (x, y)
+            // Parse start position
             String[] startPos = reader.readLine().trim().replace("(", "").replace(")", "").split(",");
             int startX = Integer.parseInt(startPos[0]);
             int startY = Integer.parseInt(startPos[1]);
@@ -28,7 +28,9 @@ public class Main {
             
             // Construct planner
             if (plannerType.equals("greedy")) {
-                return new GreedyPlanner(N, t, T, startX, startY, grid);
+                return new GreedyPlanner(N, t, T, startX, startY, grid, delay);
+            } else if (plannerType.equals("mcts")) {
+                return new MCTSPlanner(N, t, T, startX, startY, grid, delay);
             } else {
                 throw new IllegalArgumentException("Invalid planner type");
             }
@@ -40,10 +42,11 @@ public class Main {
     
     public static void main(String[] args) throws Exception {
         // Default vars
-        int N = 5;
+        int N = 3;
         String levelType = "generated";     // generated or provided
-        String plannerType = "greedy";     // greedy
-        boolean printGrid = false;
+        String plannerType = "greedy";        // greedy or mcts
+        boolean printGrid = true;
+        int delay = N;                   // Delay for restoring visited cells to original value
 
         // Parse cmd arguments
         try {
@@ -77,7 +80,7 @@ public class Main {
         try {
             // Init
             String fileName = "./levels/" + levelType + "/" + N + ".txt";
-            Planner planner = initPlanner(fileName, plannerType);
+            Planner planner = initPlanner(fileName, plannerType, delay);
             if (printGrid) {
                 planner.printGrid();
             }
@@ -89,7 +92,7 @@ public class Main {
 
             // Print result
             System.out.println(res);
-            System.out.println("Within time: " + ((endTime - startTime) <= planner.getT()));
+            System.out.println("Within time: " + ((endTime - startTime) <= planner.getMaxTime()));
         } catch (IOException e) {
             throw e;
         }

@@ -1,21 +1,31 @@
 package avalor;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 public abstract class Planner {
 
     protected int N;
     protected int t;
     protected long T;
     protected int startX, startY;
+    protected int currX, currY;
+    protected int delay;
     protected int[][] grid;
+    protected LinkedList<PathTuple> path;
     protected int[][] directions = { {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} }; // (v,h)
 
-    public Planner(int N, int t, long T, int startX, int startY, int[][] grid) {
+    public Planner(int N, int t, long T, int startX, int startY, int[][] grid, int delay) {
         this.N = N;
         this.t = t;
         this.T = T;
         this.startX = startX;
         this.startY = startY;
+        this.currX = startX;
+        this.currY = startY;
         this.grid = grid;
+        this.delay = delay;
+        this.path = new LinkedList<>();
     }
 
     // Every subclass should instantiate run method
@@ -36,12 +46,28 @@ public abstract class Planner {
         }
     }
 
+    public static String pathToString(LinkedList<PathTuple> path) {
+        StringBuilder pathStr = new StringBuilder();
+        Iterator<PathTuple> iterator = path.iterator();
+    
+        // Compose string (x,y)--...--(x,y)
+        while (iterator.hasNext()) {
+            PathTuple tuple = iterator.next();
+            pathStr.append("(").append(tuple.x).append(",").append(tuple.y).append(")");
+            if (iterator.hasNext()) {
+                pathStr.append("--"); // Add separator between path elements
+            }
+        }
+    
+        return pathStr.toString();
+    }
+
     // Getters
     public int getN() {
         return N;
     }
 
-    public int getT() {
+    public int getSteps() {
         return t;
     }
 

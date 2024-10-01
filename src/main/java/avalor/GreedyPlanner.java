@@ -1,32 +1,13 @@
 package avalor;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 
 public class GreedyPlanner extends Planner {
 
-    private int currX;
-    private int currY;
-    private int delay;
-    private LinkedList<PathTuple> path;
-    private int score;
+    private double score;
 
-    private class PathTuple {
-        int x, y, originalValue;
-
-        public PathTuple(int x, int y, int originalValue) {
-            this.x = x;
-            this.y = y;
-            this.originalValue = originalValue;
-        }
-    }
-
-    public GreedyPlanner(int N, int t, long T, int startX, int startY, int[][] grid) {
-        super(N, t, T, startX, startY, grid);
-        this.currX = startX;
-        this.currY = startY;
-        this.delay = N;
-        this.path = new LinkedList<>();
+    public GreedyPlanner(int N, int t, long T, int startX, int startY, int[][] grid, int delay) {
+        super(N, t, T, startX, startY, grid, delay);
         this.score = grid[startX][startY];
     }
 
@@ -60,23 +41,6 @@ public class GreedyPlanner extends Planner {
         }
     }
 
-    private String pathToString() {
-        StringBuilder pathStr = new StringBuilder();
-        Iterator<PathTuple> iterator = path.iterator();
-    
-        // Compose string (x,y)--...--(x,y)
-        while (iterator.hasNext()) {
-            PathTuple tuple = iterator.next();
-            pathStr.append("(").append(tuple.x).append(",").append(tuple.y).append(")");
-            if (iterator.hasNext()) {
-                pathStr.append("--"); // Add separator between path elements
-            }
-        }
-    
-        return pathStr.toString();
-    }
-    
-
     @Override
     public Result run() {
         // Init current position
@@ -84,7 +48,7 @@ public class GreedyPlanner extends Planner {
         this.currY = startY;
 
         // Take steps
-        for (int i = 0; i < t; i++) {
+        for (int i = 0; i < t+1; i++) {
             // Greedily select max action
             int[] maxDirection = {0, 0};
             int maxValue = -1;
@@ -103,7 +67,7 @@ public class GreedyPlanner extends Planner {
         }
 
         // Return result
-        return new Result(pathToString(), this.score);
+        return new Result(Planner.pathToString(this.path), this.score);
     }
 
 }
