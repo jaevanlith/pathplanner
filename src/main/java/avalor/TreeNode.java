@@ -88,8 +88,6 @@ public class TreeNode {
     // Simulate a random play from the current node
     public double simulate(int[][] grid, int[][] directions, int N, int tSteps, int delay) {
         Random random = new Random();
-        int x = this.x;
-        int y = this.y;
         LinkedList<PathTuple> path = new LinkedList<>();
 
         // Add all parents to path
@@ -98,6 +96,11 @@ public class TreeNode {
                 path.addLast(new PathTuple(parent.x, parent.y, parent.score));
             }
         }
+
+        // Add current node to path
+        int x = this.x;
+        int y = this.y;
+        path.addLast(new PathTuple(x, y, grid[x][y]));
 
         // Random exploration up to depth tSteps
         int i = this.depth;
@@ -115,7 +118,7 @@ public class TreeNode {
                 i++;
             }
         }
-
+        
         double totalScore = computeTotalScore(path, grid, delay);
         return totalScore;
     }
@@ -130,7 +133,7 @@ public class TreeNode {
         }
     }
 
-    public Result getBestPath(int[][] grid, int delay) {
+    public Result getBestPath(int[][] grid, int[][] directions, int N, int delay, int tSteps) {
         LinkedList<PathTuple> bestPath = new LinkedList<>();
         // Begin with root node
         TreeNode bestNode = this;
@@ -146,6 +149,24 @@ public class TreeNode {
             }
             // Add to path
             bestPath.addLast(new PathTuple(bestNode.x, bestNode.y, bestNode.score));
+        }
+
+        // If not at max depth, complete with random rollouts
+        int i = bestNode.depth;
+        Random random = new Random();
+        while (i < tSteps) {
+            // Randomly select a direction
+            int[] direction = directions[random.nextInt(directions.length)];
+            int nextX = x + direction[0];
+            int nextY = y + direction[1];
+            // Check if move is valid
+            if (isValidMove(nextX, nextY, N)) {
+                // Move and add to path
+                x = nextX;
+                y = nextY;
+                bestPath.addLast(new PathTuple(x, y, grid[x][y]));
+                i++;
+            }
         }
 
         // Compute score of best path

@@ -17,8 +17,6 @@ public class MCTSPlanner extends Planner {
         // Run until out of time
         while (System.currentTimeMillis() < endTime) {
             TreeNode node = root;
-
-            // Selection; get leaf node
             while (!node.isLeaf()) {
                 node = node.selectChild();
             }
@@ -37,6 +35,6 @@ public class MCTSPlanner extends Planner {
         }
 
         // Return best path
-        return root.getBestPath(grid, delay);
+        return root.getBestPath(grid, directions, N, delay, t);
     }
 }

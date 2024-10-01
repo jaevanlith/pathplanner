@@ -47,7 +47,7 @@ public class Main {
         // Default values
         int N = 3;
         String levelType = "generated";     // generated or provided
-        String plannerType = "greedy";      // greedy or mcts
+        String plannerType = "mcts";      // greedy or mcts
         boolean printGrid = true;
 
         // Parse arguments
@@ -82,8 +82,8 @@ public class Main {
         return new String[]{String.valueOf(N), levelType, plannerType, String.valueOf(printGrid)};
     }
 
-    private static void writeResultToFile(String fileName, Result res, long executionTime, long maxTime) throws IOException {
-        String resultFileName = fileName.replace("levels", "results");
+    private static void writeResultToFile(String fileName, Result res, long executionTime, long maxTime, String plannerType) throws IOException {
+        String resultFileName = fileName.replace("levels", "results").replace(".txt", ("_" + plannerType + ".txt"));
 
         File file = new File(resultFileName);
         File parentDir = file.getParentFile();
@@ -106,12 +106,13 @@ public class Main {
     
     public static void main(String[] args) throws Exception {
         // Parse cmd args
+        // FORMATL: --N --levelType --plannerType --printGrid
         String[] parsedArgs = parseArguments(args);
         int N = Integer.parseInt(parsedArgs[0]);
         String levelType = parsedArgs[1];
         String plannerType = parsedArgs[2];
         boolean printGrid = Boolean.parseBoolean(parsedArgs[3]);
-        int delay = N;
+        int delay = N*N;
 
         try {
             // Init planner
@@ -128,7 +129,7 @@ public class Main {
             long endTime = System.currentTimeMillis();
 
             // Save result
-            writeResultToFile(fileName, res, endTime - startTime, planner.getMaxTime());
+            writeResultToFile(fileName, res, endTime - startTime, planner.getMaxTime(), plannerType);
 
         } catch (IOException e) {
             throw e;
