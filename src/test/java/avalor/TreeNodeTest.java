@@ -77,36 +77,4 @@ public class TreeNodeTest {
         assertEquals(1, root.visits);
         assertEquals(10.0, root.totalScore, 0.0001);
     }
-
-    // @Test
-    // public void testGetBestPath() {
-    //     // Simulate expanding the root node and then getting the best path
-    //     root.expand(grid, 3, directions, 3);
-
-    //     // Perform a backpropagation with mock scores on the children
-    //     TreeNode firstChild = root.children.get(0);
-    //     TreeNode secondChild = root.children.get(1);
-    //     firstChild.backpropagate(5.0);
-    //     secondChild.backpropagate(15.0);  // Second child has a higher score
-
-    //     // Get the best path from the root
-    //     Result bestPathResult = root.getBestPath(grid, 2);
-
-    //     // Since secondChild has a higher score, we expect the path to include (0,0) -> (1,0) (or (0,1) depending on the directions array)
-    //     String bestPathString = bestPathResult.getPath();
-    //     assertTrue(bestPathString.contains("(0, 0)") && (bestPathString.contains("(1, 0)") || bestPathString.contains("(0, 1)")));
-    // }
-
-    // @Test
-    // public void testComputeTotalScore() {
-    //     LinkedList<PathTuple> path = new LinkedList<>();
-    //     path.add(new PathTuple(0, 0, 1)); // Start at (0,0) with value 1
-    //     path.add(new PathTuple(0, 1, 2)); // Move to (0,1) with value 2
-    //     path.add(new PathTuple(0, 0, 1)); // Return to (0,0)
-
-    //     // Total score should be: 1 (first visit) + 2 (first visit) + 1/delay*(2-0) (delayed second visit)
-    //     double totalScore = root.computeTotalScore(path, grid, 2);
-
-    //     assertEquals(1 + 2 + 0.5, totalScore, 0.0001);
-    // }
 }

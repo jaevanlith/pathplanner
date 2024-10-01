@@ -12,7 +12,6 @@ public class GreedyPlannerTest {
     private int startX, startY;
     private int[][] grid;
     private int delay;
-    private int[][] directions;
     private GreedyPlanner planner;
 
     @Before
@@ -29,7 +28,6 @@ public class GreedyPlannerTest {
             {4, 3, 6}
         };
         this.delay = N*N;
-        this.directions = new int[][] { {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} }; // (v,h)
         this.planner = new GreedyPlanner(this.N, this.t, this.T, this.startX, this.startY, this.grid, this.delay);
     }
 
@@ -43,7 +41,6 @@ public class GreedyPlannerTest {
 
     @Test
     public void testTakeStep() {
-        // Test takeStep by taking the first greedy step
         planner.run();
 
         // Check that the greedy path was taken based on the grid
@@ -59,44 +56,26 @@ public class GreedyPlannerTest {
         }
     }
 
-    // @Test
-    // public void testRun() {
-    //     // Run the GreedyPlanner
-    //     Result result = planner.run();
+    @Test
+    public void testRun() {
+        Result result = planner.run();
 
-    //     // Check that the result path and score are valid
-    //     assertNotNull(result.getPath());
-    //     assertTrue(result.getScore() > 0);
+        // Check length of path and valid score
+        assertEquals(planner.path.size(), this.t+1);
+        assertTrue(result.getScore() > 0);
 
-    //     // Verify the greedy nature: the planner should select the highest score in each step
-    //     // First step will be (1, 0) since 4 > 2 (from the initial position (0,0))
-    //     PathTuple firstStep = planner.path.get(1);
-    //     assertEquals(1, firstStep.x);
-    //     assertEquals(0, firstStep.y);
+        // Verify steps
+        PathTuple firstStep = planner.path.get(1);
+        assertEquals(1, firstStep.x);
+        assertEquals(0, firstStep.y);
 
-    //     // Second step would go to (2,0) since 7 > other values around (1,0)
-    //     PathTuple secondStep = planner.path.get(2);
-    //     assertEquals(2, secondStep.x);
-    //     assertEquals(0, secondStep.y);
-    // }
-
-    // @Test(expected = IllegalArgumentException.class)
-    // public void testInvalidMove() {
-    //     // Set up a scenario that forces an invalid move (outside the grid)
-    //     int[][] invalidGrid = new int[][]{
-    //         {1, -1, -1},
-    //         {-1, -1, -1},
-    //         {-1, -1, -1}
-    //     };
-    //     GreedyPlanner invalidPlanner = new GreedyPlanner(3, 2, 1000, 0, 0, invalidGrid, 2);
-    //     invalidPlanner.run();  // This should throw an IllegalArgumentException
-    // }
+        PathTuple secondStep = planner.path.get(2);
+        assertEquals(0, secondStep.x);
+        assertEquals(1, secondStep.y);
+    }
 
     @Test
     public void testGridRestorationAfterDelay() {
-        // Check that grid values are restored after delay during path traversal
-
-        // Run the planner for the first step
         planner.run();
 
         // Simulate delay for restoration
@@ -109,13 +88,10 @@ public class GreedyPlannerTest {
         }
     }
 
-    // @Test
-    // public void testFinalScore() {
-    //     // Run the planner and get the final score
-    //     Result result = planner.run();
+    @Test
+    public void testFinalScore() {
+        Result result = planner.run();
 
-    //     // Check if the score matches what we expect by summing up the highest possible values for the greedy path
-    //     // For example, in our grid: (0,0) -> (1,0) -> (2,0) should be 1 + 4 + 7 = 12
-    //     assertEquals(12, result.getScore(), 0.001);
-    // }
+        assertEquals(27, result.getScore(), 0.0);
+    }
 }
