@@ -54,5 +54,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git add ./results/*
-        git commit -m "Add results from greedy algorithm run"
+        git commit -m "Add results from greedy algorithm run" --allow-empty
         git push "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_REF}
