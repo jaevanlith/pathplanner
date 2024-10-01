@@ -3,6 +3,9 @@ package avalor;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.File;
 
 public class Main {
 
@@ -39,23 +42,22 @@ public class Main {
             throw e;
         }
     }
-    
-    public static void main(String[] args) throws Exception {
-        // Default vars
+
+    private static String[] parseArguments(String[] args) throws IllegalArgumentException {
+        // Default values
         int N = 3;
         String levelType = "generated";     // generated or provided
-        String plannerType = "greedy";        // greedy or mcts
+        String plannerType = "greedy";      // greedy or mcts
         boolean printGrid = true;
-        int delay = N;                   // Delay for restoring visited cells to original value
 
-        // Parse cmd arguments
+        // Parse arguments
         try {
             if (args.length > 0) {
                 try {
                     N = Integer.parseInt(args[0]);
                 } catch (NumberFormatException e) {
                     System.err.println("Invalid grid size (N): " + args[0]);
-                    return;
+                    throw new IllegalArgumentException("Invalid grid size: " + args[0]);
                 }
             }
             if (args.length > 1) {
@@ -66,8 +68,8 @@ public class Main {
             }
             if (args.length > 2) {
                 plannerType = args[2];
-                if (!plannerType.equals("greedy")) {
-                    throw new IllegalArgumentException("Invalid plannerType. Options: greedy");
+                if (!plannerType.equals("greedy") && !plannerType.equals("mcts")) {
+                    throw new IllegalArgumentException("Invalid plannerType. Options: greedy, mcts");
                 }
             }
             if (args.length > 3) {
@@ -76,23 +78,58 @@ public class Main {
         } catch (Exception e) {
             throw e;
         }
-        
+
+        return new String[]{String.valueOf(N), levelType, plannerType, String.valueOf(printGrid)};
+    }
+
+    private static void writeResultToFile(String fileName, Result res, long executionTime, long maxTime) throws IOException {
+        String resultFileName = fileName.replace("levels", "results");
+
+        File file = new File(resultFileName);
+        File parentDir = file.getParentFile();
+
+        // Create dir if non-existent
+        if (parentDir != null && !parentDir.exists()) {
+            boolean dirCreated = parentDir.mkdirs();
+            if (dirCreated) {
+                System.out.println("Directory created: " + parentDir.getAbsolutePath());
+            }
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(resultFileName))) {
+            writer.write(res.toString() + "\n");
+            writer.write("Within time: " + (executionTime <= maxTime) + "\n");
+        }
+
+        System.out.println("Result written to: " + resultFileName);
+    }
+    
+    public static void main(String[] args) throws Exception {
+        // Parse cmd args
+        String[] parsedArgs = parseArguments(args);
+        int N = Integer.parseInt(parsedArgs[0]);
+        String levelType = parsedArgs[1];
+        String plannerType = parsedArgs[2];
+        boolean printGrid = Boolean.parseBoolean(parsedArgs[3]);
+        int delay = N;
+
         try {
-            // Init
+            // Init planner
             String fileName = "./levels/" + levelType + "/" + N + ".txt";
             Planner planner = initPlanner(fileName, plannerType, delay);
+            
             if (printGrid) {
                 planner.printGrid();
             }
 
-            // Run
+            // Run planner and track time
             long startTime = System.currentTimeMillis();
             Result res = planner.run();
             long endTime = System.currentTimeMillis();
 
-            // Print result
-            System.out.println(res);
-            System.out.println("Within time: " + ((endTime - startTime) <= planner.getMaxTime()));
+            // Save result
+            writeResultToFile(fileName, res, endTime - startTime, planner.getMaxTime());
+
         } catch (IOException e) {
             throw e;
         }

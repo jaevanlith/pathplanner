@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: Run levels with greedy algorithm
     runs-on: ubuntu-latest
 
     strategy:
@@ -36,6 +37,6 @@ jobs:
           for file in "$dir"*.txt; do
             N=$(basename "$file" .txt)
             echo "Running Main for N=$N, levelType=$levelType"
-            mvn exec:java -Dexec.mainClass="avalor.Main" -Dexec.args="$N $levelType greedy"
+            mvn exec:java -Dexec.mainClass="avalor.Main" -Dexec.args="$N $levelType greedy true"
           done
         done

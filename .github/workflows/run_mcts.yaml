@@ -1,0 +1,42 @@
+name: Run levels
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Run levels with MCTS algorithm
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [11]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: 'adopt'
+
+    - name: Build with Maven
+      run: mvn install
+
+    - name: Run Main class for all level files
+      run: |
+        for dir in ./levels/*/; do
+          levelType=$(basename $dir)
+          for file in "$dir"*.txt; do
+            N=$(basename "$file" .txt)
+            echo "Running Main for N=$N, levelType=$levelType"
+            mvn exec:java -Dexec.mainClass="avalor.Main" -Dexec.args="$N $levelType mcts true"
+          done
+        done
